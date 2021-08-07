@@ -41,9 +41,12 @@
             Vector2Ushort? spawnPosition = null;
 
             var spawnZone = ZonePlayerSpawn.Instance.ServerZoneInstance;
-
-           
-                //var spawnZone = protoSpawnZone.ServerZoneInstance;
+            if (isRespawn)
+            {
+                spawnZone = protoSpawnZone.ServerZoneInstance;
+            }
+            
+           //var spawnZone = protoSpawnZone.ServerZoneInstance;
             if (!spawnZone.IsEmpty)
             {
                 // TODO: this could be slow and might require distributing across the multiple frames

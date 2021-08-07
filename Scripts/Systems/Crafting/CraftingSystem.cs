@@ -341,16 +341,16 @@ namespace AtomicTorch.CBND.CoreMod.Systems.Crafting
 
                     var rate = 1.0;
 
-                    if (PveZone.IsPveZone(Api.Client.Characters.CurrentPlayerCharacter))
+                    /*if (PveZone.IsPveZone(Api.Client.Characters.CurrentPlayerCharacter))
                     {
                         rate = await Instance.CallServer(
                                        _ => _.ServerRemote_RequestLearningPointsGainMultiplierRatePve());
                     }
                     else
-                    {
+                    {*/
                         rate = await Instance.CallServer(
                                        _ => _.ServerRemote_RequestLearningPointsGainMultiplierRate());
-                    }
+                    /*}*/
 
                     // ReSharper disable once CompareOfFloatsByEqualityOperator
                     if (ClientCraftingSpeedMultiplier == rate)

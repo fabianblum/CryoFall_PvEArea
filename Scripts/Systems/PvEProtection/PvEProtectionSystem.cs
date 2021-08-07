@@ -55,11 +55,14 @@
         public const string Title_NewbieProtection =
             "Newbie protection";
 
+        private const int ServerUpdateInterval = 10;
 
         static PvEProtectionSystem()
         {
            
         }
+
+        public static event Action<double> ClientPveProtectionTimeRemainingReceived;
 
         [NotLocalizable]
         public override string Name => "PvE protection system";
@@ -85,7 +88,29 @@
 
         protected override void PrepareSystem()
         {
+            if (IsClient)
+            {
+                return;
+            }
+
+            TriggerTimeInterval.ServerConfigureAndRegister(
+                callback: this.ServerUpdate,
+                name: "System." + this.ShortId,
+                interval: TimeSpan.FromSeconds(ServerUpdateInterval));
+        }
+
+        private void ServerUpdate()
+        {
             
+            //Instance.CallClient(ClientCurrentCharacterHelper.Character, _ => _.ClientRemote_SetPveProtection());
+        }
+
+        private void ClientRemote_SetPveProtection()
+        {
+            Logger.Info("Received PvE Protection");
+
+            Api.SafeInvoke(
+                () => ClientPveProtectionTimeRemainingReceived?.Invoke(0));
         }
 
         private class Bootstrapper : BaseBootstrapper

@@ -6,10 +6,10 @@
 
     public class ViewModelHUDPvEProtectionInfo : BaseViewModel
     {
-        private double timeRemaining;
-
         public ViewModelHUDPvEProtectionInfo()
         {
+            ClientUpdateHelper.UpdateCallback += this.UpdateTimerOnly;
+            this.UpdateText();
         }
 
         public string ProtectionTimeRemainingText { get; set; }
@@ -18,13 +18,15 @@
 
         public Visibility Visibility { get; private set; }
 
-        public void Setup(double timeRemaining)
+        public void Setup()
         {
+            this.UpdateText();
         }
 
         protected override void DisposeViewModel()
         {
             base.DisposeViewModel();
+            ClientUpdateHelper.UpdateCallback -= this.UpdateTimerOnly;
         }
 
         private void UpdateText()
@@ -33,10 +35,20 @@
             {
                 return;
             }
+
+            ClientTimersSystem.AddAction(0.333, this.UpdateText);
         }
 
         private void UpdateTimerOnly()
         {
+            /*this.timeRemaining -= Client.Core.DeltaTime;
+            if (this.timeRemaining <= 0)
+            {
+                this.timeRemaining = 0;
+                this.Visibility = Visibility.Collapsed;
+                return;
+            }*/
+
             this.Visibility = Visibility.Visible;
         }
     }

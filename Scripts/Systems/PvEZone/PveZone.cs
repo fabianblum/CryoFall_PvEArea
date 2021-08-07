@@ -20,6 +20,7 @@
     using AtomicTorch.CBND.GameApi.Data.World;
     using AtomicTorch.CBND.CoreMod.Systems.WorldMapResourceMarks;
     using AtomicTorch.CBND.CoreMod.Systems;
+    using AtomicTorch.GameEngine.Common.Primitives;
 
     public class PveZone : ProtoSystem<PveZone>
     {
@@ -41,8 +42,30 @@
             {
                 return false;
             }
+
+            
             var pveArea = ZonePvE.Instance.ServerZoneInstance;
             return pveArea.IsContainsPosition(character.Position.ToVector2Ushort());
+        }
+
+        public static bool IsPveZone(Vector2Ushort position)
+        {
+            
+            if (!PveZoneEnabled)
+            {
+                return false;
+            }
+            
+
+            if(position.Y < 9879)
+            {
+                return true;
+            }
+
+            return false;
+
+            //var pveArea = ZonePvE.Instance.ServerZoneInstance;
+            //return pveArea.IsContainsPosition(position);
         }
 
         public static bool IsPveZone(IStaticWorldObject worldObj)
@@ -51,6 +74,7 @@
             {
                 return false;
             }
+            
             var pveArea = ZonePvE.Instance.ServerZoneInstance;
             return pveArea.IsContainsPosition(WorldMapResourceMarksSystem.SharedGetObjectCenterPosition(worldObj));
         }

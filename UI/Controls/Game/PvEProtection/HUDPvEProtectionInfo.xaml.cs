@@ -7,6 +7,7 @@
     using AtomicTorch.CBND.CoreMod.UI.Controls.Game.PvEProtection.Data;
     using AtomicTorch.CBND.CoreMod.UI.Controls.Game.Social;
     using AtomicTorch.GameEngine.Common.Client.MonoGame.UI;
+    using AtomicTorch.CBND.CoreMod.Systems;
 
     public partial class HUDPvEProtectionInfo : BaseUserControl
     {
@@ -38,6 +39,9 @@
                                                 "Collapsed",
                                                 useTransitions: false);
 
+            PvEProtectionSystem.ClientPveProtectionTimeRemainingReceived
+                += this.PveProtectionTimeRemainingReceivedHandler;
+
             this.MouseEnter += this.MouseEnterOrLeaveHandler;
             this.MouseLeave += this.MouseEnterOrLeaveHandler;
             this.MouseDown += MouseDownHandler;
@@ -60,9 +64,9 @@
 
         }
 
-        private void NewbieProtectionTimeRemainingReceivedHandler(double obj)
+        private void PveProtectionTimeRemainingReceivedHandler(double obj)
         {
-
+            this.RefreshTimeRemaining();
         }
 
         private void RefreshState(int refreshNumber)
@@ -72,7 +76,7 @@
 
         private void RefreshTimeRemaining()
         {
-
+            this.viewModel?.Setup();
         }
     }
 }
