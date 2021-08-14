@@ -40,11 +40,7 @@
             var random = Api.Random;
             Vector2Ushort? spawnPosition = null;
 
-            var spawnZone = ZonePlayerSpawn.Instance.ServerZoneInstance;
-            if (isRespawn)
-            {
-                spawnZone = protoSpawnZone.ServerZoneInstance;
-            }
+            var spawnZone = Api.GetProtoEntity<ZoneSpecialPlayerSpawn>().ServerZoneInstance;
             
            //var spawnZone = protoSpawnZone.ServerZoneInstance;
             if (!spawnZone.IsEmpty)
